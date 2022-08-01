@@ -34,7 +34,7 @@ Database: I used postgresql db to store signup user data.
 
 Things I need to change: 
 Right now the authentication is not handled via header and since i am not very good with react, I need to have some time to work with authentication/cookie handling.
-==So i need to implement it late.  
+So i need to implement it later.    
 
 The base url and other environment values are stored in code but it should be handled via environment file.  
 
