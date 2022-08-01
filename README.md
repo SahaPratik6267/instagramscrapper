@@ -30,3 +30,9 @@ NOTE: I have implemented the login with google and Facebook in backend too. Just
 then follow the process and you will see the name associated with the profile is showing. Its not handled in swagger because of time shortage. which is why same
 functionality was implemented in CLient side with react.
 
+Database: I used postgresql db to store signup user data.
+
+Things I need to change: 
+Right now the authentication is not handled via header and since i am not very good with react, I need to have some time to work with authentication/cookie handling.
+So i need to implement it late.
+The base url and other environment values are stored in code but it should be handled via environment file.
