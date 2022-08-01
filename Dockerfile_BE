@@ -1,0 +1,28 @@
+
+FROM golang:1.18.2-alpine as go_builder
+
+WORKDIR /build
+
+# get the dependencies
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+RUN go mod tidy
+
+# copy the source code over
+COPY ScrapperProject ./ScrapperProject
+
+RUN go mod tidy
+WORKDIR /build/ScrapperProject
+
+# build the server application
+# this doesn't work as the build image doesn't have git in it, and we don't copy the .git directory over
+#ARG VERSION="$(git rev-parse --short HEAD) $(git show -s --format=%ci HEAD)"
+# can't have spaces in the VERSION field or the ldflags argument messes up *sigh*
+RUN export VERSION="$(date +%Y%b%d%H%M%S)"; go build -o /docker-scrapper;
+# ensure we can get to the server
+# 8080 is the default port for Cloud Run
+EXPOSE 8000
+
+# run it!
+CMD [ "/docker-scrapper" ]

@@ -1,0 +1,163 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  Credentials:
+    properties:
+      email:
+        type: string
+        x-go-name: Email
+      password:
+        type: string
+        x-go-name: Password
+    type: object
+    x-go-package: github.com/SahaPratik6267/instagramscrapper/ScrapperProject/pkg/controllers
+  DeletedAt:
+    $ref: '#/definitions/NullTime'
+  NullTime:
+    description: |-
+      NullTime implements the Scanner interface so
+      it can be used as a scan destination, similar to NullString.
+    properties:
+      Time:
+        format: date-time
+        type: string
+      Valid:
+        type: boolean
+    title: NullTime represents a time.Time that may be null.
+    type: object
+    x-go-package: database/sql
+  ProfileName:
+    properties:
+      profile:
+        type: string
+        x-go-name: InputProfile
+    type: object
+    x-go-package: github.com/SahaPratik6267/instagramscrapper/ScrapperProject/pkg/controllers
+  UUID:
+    description: |-
+      A UUID is a 128 bit (16 byte) Universal Unique IDentifier as defined in RFC
+      4122.
+    items:
+      format: uint8
+      type: integer
+    type: array
+    x-go-package: github.com/google/uuid
+  User:
+    properties:
+      email:
+        type: string
+        x-go-name: Email
+      name:
+        type: string
+        x-go-name: Name
+      password:
+        type: string
+        x-go-name: Password
+    type: object
+    x-go-package: github.com/SahaPratik6267/instagramscrapper/ScrapperProject/pkg/models
+info:
+  description: Documentation for twitter scrapper api
+  title: of Product API
+  version: 1.0.0
+paths:
+  /login:
+    post:
+      description: Returns acount info (follower,folloing,likes,postcount)
+      operationId: loginparam
+      parameters:
+      - in: body
+        name: credentials
+        schema:
+          $ref: '#/definitions/Credentials'
+        x-go-name: Credentials
+      responses:
+        "200":
+          $ref: '#/responses/IdResponse'
+  /register:
+    post:
+      description: Returns acount info (follower,folloing,likes,postcount)
+      operationId: registerparam
+      parameters:
+      - in: body
+        name: RegisterUserDetails
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        "200":
+          $ref: '#/responses/IdResponse'
+  /twitter:
+    post:
+      description: Returns acount info (follower,folloing,likes,postcount)
+      operationId: twitterProfile
+      parameters:
+      - in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/ProfileName'
+        x-go-name: InputProfile
+      responses:
+        "200":
+          $ref: '#/responses/ProfileResponse'
+produces:
+- application/json
+responses:
+  IdResponse:
+    description: ""
+    schema:
+      $ref: '#/definitions/UUID'
+  ProfileResponse:
+    description: Profile of twitter user.
+    headers:
+      Banner:
+        type: string
+      Biography:
+        type: string
+      Birthday:
+        type: string
+      FollowersCount:
+        format: int64
+        type: integer
+      FollowingCount:
+        format: int64
+        type: integer
+      FriendsCount:
+        format: int64
+        type: integer
+      IsPrivate:
+        type: boolean
+      IsVerified:
+        type: boolean
+      Joined:
+        format: date-time
+        type: string
+      LikesCount:
+        format: int64
+        type: integer
+      ListedCount:
+        format: int64
+        type: integer
+      Location:
+        type: string
+      Name:
+        type: string
+      PinnedTweetIDs:
+        items:
+          type: string
+        type: array
+      TweetsCount:
+        format: int64
+        type: integer
+      URL:
+        type: string
+      UserID:
+        type: string
+      Username:
+        type: string
+      Website:
+        type: string
+schemes:
+- http
+swagger: "2.0"
